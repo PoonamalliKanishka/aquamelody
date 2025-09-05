@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaMelody Restaurant</title>
+  <style>
+    body {
+      margin:0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      line-height:1.6;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd, #c2e9fb, #fdfbfb, #d4fc79);
+      background-size: 500% 500%;
+      animation: gradientBG 15s ease infinite;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    header {
+      background:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1350&q=80') 
+      no-repeat center center/cover;
+      height: 95vh; color: white; text-align: center;
+      display: flex; flex-direction: column; justify-content: center;
+      box-shadow: inset 0 0 200px rgba(0,0,0,0.6);
+      position:relative;
+    }
+    header::after {
+      content:""; position:absolute; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.4);
+    }
+    header h1 {
+      font-size:3.8rem; margin:0; z-index:1; position:relative;
+      text-shadow:3px 3px 10px #000, 0 0 25px #f39c12;
+    }
+    header p {
+      font-size:1.6rem; font-weight:bold; z-index:1; position:relative;
+      background: rgba(0,0,0,0.6); display:inline-block;
+      padding:12px 25px; border-radius:10px;
+    }
+    nav {
+      position:sticky; top:0;
+      background:linear-gradient(90deg,#ff512f,#dd2476);
+      padding:12px; text-align:center; z-index:1000;
+      box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    }
+    nav a { color:white; text-decoration:none; margin:0 18px; font-weight:bold; font-size:1rem; transition:0.3s; }
+    nav a:hover { color:#ffeb3b; text-shadow:0 0 10px #fff; }
+    section { padding:50px 25px; max-width:1200px; margin:auto; }
+    h2 { color:#222; text-align:center; margin-bottom:25px; font-size:2.2rem; text-transform:uppercase; letter-spacing:1px; }
+
+    /* Offers */
+    .offers {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      color: #111;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      margin-bottom: 40px;
+      animation: pulse 2s infinite;
+    }
+    .offers h3 { font-size: 1.8rem; margin-bottom: 15px; }
+    .offers ul { list-style: none; padding: 0; font-size: 1.2rem; }
+    .offers li { margin: 10px 0; font-weight: bold; }
+    .highlight {
+      color: #c0392b; font-size: 1.4rem; background: #fff; padding: 5px 10px;
+      border-radius: 8px; box-shadow: 0 0 10px rgba(255,255,255,0.8);
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    /* Menu */
+    .menu-buttons { text-align:center; margin-bottom:25px; }
+    .menu-buttons button {
+      margin:6px; padding:12px 22px; border:none;
+      background:#f39c12; color:white; cursor:pointer; border-radius:25px;
+      font-weight:bold; transition:0.3s;
+    }
+    .menu-buttons button:hover { background:#d35400; transform:scale(1.08); }
+    .menu-items { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
+    .menu-item {
+      border:1px solid #ccc; padding:15px; text-align:center;
+      border-radius:12px; background:rgba(255,255,255,0.95);
+      box-shadow:0 4px 12px rgba(0,0,0,0.2); transition:0.3s;
+    }
+    .menu-item:hover { transform:translateY(-5px); }
+    .menu-item span { display:block; color:#e74c3c; margin-top:5px; font-weight:bold; }
+
+    /* Gallery */
+    .gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:15px; }
+    .gallery img { width:100%; height:220px; object-fit:cover; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.4); transition:0.3s; }
+    .gallery img:hover { transform:scale(1.05); }
+
+    /* Reservation */
+    form {
+      max-width:520px; margin:auto; display:flex; flex-direction:column;
+      background:white; padding:25px; border-radius:12px;
+      box-shadow:0 4px 20px rgba(0,0,0,0.25);
+    }
+    form input, form select, form button {
+      margin:10px 0; padding:12px; font-size:1rem; border-radius:6px; border:1px solid #ccc;
+    }
+    form button {
+      background:#27ae60; color:white; border:none; cursor:pointer; font-weight:bold;
+    }
+    form button:hover { background:#1e8449; }
+
+    footer { text-align:center; padding:25px; background:#111; color:white; }
+    .social-icons a { margin:0 12px; color:white; font-size:1.6rem; text-decoration:none; transition:0.3s; }
+    .social-icons a:hover { color:#f39c12; text-shadow:0 0 12px #fff; }
+
+    /* QR Code */
+    #qr {
+      text-align:center;
+      margin-top:40px;
+    }
+    #qrcode {
+      margin:auto;
+      padding:15px;
+      background:white;
+      display:inline-block;
+      border-radius:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#timings">Food Timings</a>
+  <a href="#offer">Offers</a>
+  <a href="#menu">Menu</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#reservation">Reservation</a>
+  <a href="#location">Location</a>
+  <a href="#blog">Blog</a>
+  <a href="#qr">QR Code</a>
+</nav>
+
+<header id="home">
+  <h1>Welcome to AquaMelody Restaurant</h1>
+  <p>Luxury Dining on Waterfloor with Live Music 🎶</p>
+</header>
+
+<!-- About -->
+<section id="about">
+  <h2>About Us</h2>
+  <p>
+    AquaMelody is a <b>unique waterfloor restaurant</b> where fine dining meets elegance. 
+    Enjoy <b>live music</b>, colorful interiors, and a wide variety of Indian & International cuisines. 
+    Perfect for <b>families, couples, and solo diners</b>.
+  </p>
+</section>
+
+<!-- Timings -->
+<section id="timings">
+  <h2>Food Timings</h2>
+  <ul>
+    <li>🍳 <b>Breakfast:</b> 7:00 AM – 10:30 AM</li>
+    <li>🍲 <b>Lunch:</b> 12:00 PM – 3:30 PM</li>
+    <li>🍔 <b>Snacks & Fast Food:</b> 4:00 PM – 6:30 PM</li>
+    <li>🍷 <b>Dinner:</b> 7:00 PM – 11:00 PM</li>
+  </ul>
+  <p style="color:red; font-weight:bold; text-align:center;">
+    🚫 Pets are not allowed | 💳 Pre-booking charges are non-refundable
+  </p>
+</section>
+
+<!-- Offers -->
+<section id="offer">
+  <h2>Special Offers 🎁</h2>
+  <div class="offers">
+    <h3>🔥 Current Deals</h3>
+    <ul>
+      <li><span class="highlight">Spend above $100 – Get 20% OFF on your next visit!</span></li>
+      <li>🎂 Birthday Person: FREE Cake + Party Dance</li>
+      <li>👨‍👩‍👧 Family Combos starting at just $60</li>
+      <li>🍹 Happy Hours Drinks – Buy 1 Get 1 Free (4 PM – 7 PM)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Menu -->
+<section id="menu">
+  <h2>Our Menu</h2>
+  <div class="menu-buttons">
+    <button onclick="filterMenu('all')">All</button>
+    <button onclick="filterMenu('starters')">Starters</button>
+    <button onclick="filterMenu('main')">Main Course</button>
+    <button onclick="filterMenu('biryani')">Biryanis</button>
+    <button onclick="filterMenu('bread')">Indian Breads</button>
+    <button onclick="filterMenu('dessert')">Desserts</button>
+    <button onclick="filterMenu('drinks')">Drinks</button>
+    <button onclick="filterMenu('combo')">Combos</button>
+    <button onclick="filterMenu('special')">Specials</button>
+  </div>
+
+  <div class="menu-items">
+    <div class="menu-item starters">Paneer Tikka <span>$12</span></div>
+    <div class="menu-item starters">Chicken 65 <span>$14</span></div>
+    <div class="menu-item main">Butter Chicken <span>$18</span></div>
+    <div class="menu-item main">Paneer Butter Masala <span>$16</span></div>
+    <div class="menu-item biryani">Chicken Biryani <span>$18</span></div>
+    <div class="menu-item biryani">Hyderabadi Special Dum Biryani <span>$25</span></div>
+    <div class="menu-item bread">Butter Naan <span>$3</span></div>
+    <div class="menu-item bread">Stuffed Kulcha <span>$5</span></div>
+    <div class="menu-item dessert">Gulab Jamun <span>$5</span></div>
+    <div class="menu-item dessert">Brownie with Ice Cream <span>$9</span></div>
+    <div class="menu-item drinks">Cold Coffee <span>$5</span></div>
+    <div class="menu-item drinks">Mocktail <span>$6</span></div>
+    <div class="menu-item combo">Family Feast Combo <span>$60</span></div>
+    <div class="menu-item special">Royal Mughlai Thali <span>$45</span></div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery">
+  <h2>Gallery</h2>
+  <div class="gallery">
+    <img src="https://shef.com/homemade-food/wp-content/uploads/tabletop-spread-of-authentic-indian-food.jpg" alt="Food">
+    <img src="https://tse3.mm.bing.net/th/id/OIP.aVNuH7ArDKEMtTjAoi7wXgHaKE?w=600&h=816&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Dining">
+    <img src="https://static.vecteezy.com/system/resources/previews/033/692/644/non_2x/chef-preparing-food-in-the-kitchen-at-the-restaurant-professional-chef-cooking-gourmet-chef-cooking-in-a-commercial-kitchen-ai-generated-free-photo.jpg" alt="Chef">
+    <img src="https://tse2.mm.bing.net/th/id/OIP.Tn7mTWhR4d0U0TiwcmW96wHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Party">
+  </div>
+</section>
+
+<!-- Reservation -->
+<section id="reservation">
+  <h2>Book a Table</h2>
+  <form onsubmit="reserve(event)">
+    <input type="text" placeholder="Your Name" required>
+    <input type="email" placeholder="Your Email" required>
+    <input type="tel" placeholder="Your Phone" required>
+    <input type="date" required>
+    <input type="time" required>
+    <select required>
+      <option value="">Select Guests</option>
+      <option>1</option>
+      <option>2</option>
+      <option>4</option>
+      <option>6+</option>
+    </select>
+    <label><input type="checkbox"> 🎂 Is this a Birthday Celebration?</label>
+    <button type="submit">Reserve Now</button>
+  </form>
+  <p id="confirmation" style="text-align:center; color:green; font-weight:bold; display:none;">
+    ✅ Reservation Confirmed! We can’t wait to welcome you 🎶
+  </p>
+</section>
+
+<!-- Location -->
+<section id="location">
+  <h2>Our Location</h2>
+  <p style="text-align:center;">123 Aqua Street, Food City, India</p>
+  <iframe src="https://maps.google.com/maps?q=restaurant&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="300" style="border:0;" allowfullscreen></iframe>
+</section>
+
+<!-- Blog -->
+<section id="blog">
+  <h2>Our Blog</h2>
+  <p style="text-align:center;">
+    🍴 Stay tuned for <b>Chef’s recipes</b>, 🎉 <b>special events</b>, and 💡 <b>exclusive tips</b> on fine dining.  
+    Coming soon on AquaMelody’s official blog!
+  </p>
+</section>
+
+<!-- QR Code -->
+<section id="qr">
+  <h2>Scan Our QR Code</h2>
+  <div id="qrcode"></div>
+  <p>📱 Scan to visit our website easily!</p>
+</section>
+
+<footer>
+  <p>Follow us on:</p>
+  <div class="social-icons">
+    <a href="#">🐦 Twitter</a>
+    <a href="#">📘 Facebook</a>
+    <a href="#">📸 Instagram</a>
+  </div>
+  <p>&copy; 2025 AquaMelody Restaurant | Luxury Dining with Music 🎶</p>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  function filterMenu(category) {
+    const items = document.querySelectorAll('.menu-item');
+    items.forEach(item => {
+      if (category === 'all' || item.classList.contains(category)) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+  function reserve(event) {
+    event.preventDefault();
+    document.getElementById('confirmation').style.display = 'block';
+  }
+
+  // QR Code
+  new QRCode(document.getElementById("qrcode"), {
+    text: "https://yourwebsite.com",   // Replace this with your hosted site link
+    width: 150,
+    height: 150,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+</script>
+
+</body>
+</html>
